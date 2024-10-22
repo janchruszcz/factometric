@@ -1,0 +1,26 @@
+# Rails
+api/tmp/
+api/log/
+api/.bundle/
+api/db/*.sqlite3
+api/db/*.sqlite3-journal
+api/public/assets/
+api/storage/
+api/.env*
+api/config/master.key
+api/config/credentials/*.key
+
+# Next.js
+web/.next/
+web/node_modules/
+web/.env*
+web/.vercel
+web/build
+web/dist
+
+# General
+.DS_Store
+*.log
+*.swp
+.idea/
+.vscode/
