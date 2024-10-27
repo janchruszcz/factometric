@@ -108,6 +108,9 @@ GEM
     marcel (1.0.4)
     mini_mime (1.1.5)
     minitest (5.25.1)
+    minitest-rails (7.1.1)
+      minitest (~> 5.20)
+      railties (>= 7.1.0, < 8.0.0)
     msgpack (1.7.3)
     mutex_m (0.2.0)
     net-imap (0.5.0)
@@ -126,6 +129,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
+    pagy (9.1.0)
     pg (1.5.8)
     psych (5.1.2)
       stringio
@@ -133,6 +137,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
+    rack-cors (2.0.2)
+      rack (>= 2.0.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -193,8 +199,11 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  minitest-rails (~> 7.1.0)
+  pagy (~> 9.1)
   pg (~> 1.1)
   puma (>= 5.0)
+  rack-cors (~> 2.0)
   rails (~> 7.1.4)
   tzinfo-data
 
