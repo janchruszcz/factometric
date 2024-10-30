@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <SidebarProvider>
           <AppSidebar />
-          <main className="bg-zinc-100 my-2 rounded-lg w-full mx-3">
+          <main className="container border-zinc-100 border-2 my-2 rounded-lg mx-3">
             <SidebarTrigger />
             {children}
           </main>
