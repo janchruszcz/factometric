@@ -1,51 +1,26 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { metricsApi } from '@/lib/api/metrics';
+import MetricForm, { MetricFormData } from '@/components/MetricForm';
 
 export default function CreateMetricForm() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement API call to create metric
-    console.log('Creating metric:', { name, description });
-    // Redirect to metrics list page after creation
-    router.push('/metrics');
+  const onSubmit = async (values: MetricFormData) => {
+    try {
+      const response = await metricsApi.createMetric(values);
+      console.log('Metric created:', response);
+      router.push('/metrics');
+    } catch (error) {
+      console.error('Error creating metric:', error);
+    }
   };
 
   return (
     <div className="max-w-md mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Create New Metric</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block mb-1">Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description" className="block mb-1">Description:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
-            rows={4}
-          />
-        </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-          Create Metric
-        </button>
-      </form>
+      <MetricForm onSubmit={onSubmit} submitButtonText="Create Metric" />
     </div>
   );
 }
-
