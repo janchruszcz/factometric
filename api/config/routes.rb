@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :metrics, only: [:index, :create, :show, :update, :destroy]
+      get '/dashboard', to: 'dashboard#index'
+      get '/analytics', to: 'analytics#index'
     end
   end
 end
