@@ -5,6 +5,7 @@ class CreateMetrics < ActiveRecord::Migration[7.1]
       t.decimal :value, null: false, precision: 20, scale: 4
       t.datetime :timestamp, null: false
       t.string :category, null: false
+      t.string :granularity, null: false
       t.string :source
       t.jsonb :metadata, default: {}
       t.string :tags, array: true, default: []
@@ -13,6 +14,7 @@ class CreateMetrics < ActiveRecord::Migration[7.1]
 
       t.index :timestamp
       t.index :category
+      t.index :granularity
       t.index :source
       t.index :tags, using: :gin
     end

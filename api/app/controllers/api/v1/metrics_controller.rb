@@ -5,8 +5,9 @@ class Api::V1::MetricsController < ApplicationController
   def index
     @metrics = Metric.all
 
-    @metrics = @metrics.where(category: params[:category]) if params[:category].present?
     @metrics = @metrics.where('name LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    @metrics = @metrics.where(category: params[:category]) if params[:category].present?
+    @metrics = @metrics.where(granularity: params[:granularity]) if params[:granularity].present?
     @metrics = @metrics.where('timestamp >= ?', params[:start_date]) if params[:start_date].present?
     @metrics = @metrics.where('timestamp <= ?', params[:end_date]) if params[:end_date].present?
     @metrics = @metrics.where(source: params[:source]) if params[:source].present?
@@ -50,6 +51,6 @@ class Api::V1::MetricsController < ApplicationController
   private
 
   def metric_params
-    params.require(:metric).permit(:name, :value, :timestamp, :category)
+    params.require(:metric).permit(:name, :value, :timestamp, :category, :granularity, :source, :metadata, :tags)
   end
 end

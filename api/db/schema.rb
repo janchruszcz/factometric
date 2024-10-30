@@ -19,12 +19,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_122532) do
     t.decimal "value", precision: 20, scale: 4, null: false
     t.datetime "timestamp", null: false
     t.string "category", null: false
+    t.string "granularity", null: false
     t.string "source"
     t.jsonb "metadata", default: {}
     t.string "tags", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category"], name: "index_metrics_on_category"
+    t.index ["granularity"], name: "index_metrics_on_granularity"
     t.index ["source"], name: "index_metrics_on_source"
     t.index ["tags"], name: "index_metrics_on_tags", using: :gin
     t.index ["timestamp"], name: "index_metrics_on_timestamp"
