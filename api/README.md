@@ -1,4 +1,4 @@
-# Metrics API
+# Factometric API
 
 A Rails API for managing and analyzing metrics data with support for time-series analytics and dashboard visualization.
 
@@ -16,11 +16,13 @@ The application uses PostgreSQL with the following main table:
 - `name` (string, required): Name of the metric
 - `value` (decimal, required): Numeric value with precision of 20 and scale of 4
 - `timestamp` (datetime, required): When the metric was recorded
-- `category` (string, required): One of: engagement, acquisition, revenue, feature
-- `granularity` (string, required): One of: minute, hourly, daily
+- `category` (string, required): One of: [engagement, acquisition, revenue, feature]
+- `granularity` (string, required): One of: [minute, hourly, daily]
 - `source` (string, optional): Source of the metric
 - `metadata` (jsonb): Additional metadata as JSON
 - `tags` (string[]): Array of tags
+
+Note: Category and granularity are stored as strings (not int with enum) to make it easier to read for non-technical users. Using enum would be slightly more efficient, but it would make it harder to extend the list of categories and granularities.
 
 ## API Endpoints
 
@@ -72,24 +74,23 @@ Delete a metric
 
 ### Analytics API (v1)
 
-#### GET /api/v1/analytics/summary
-Get summary statistics for metrics:
-- `count`: Total number of records
-- `average`: Average value
-- `min`: Minimum value
-- `max`: Maximum value
-- `sum`: Sum of values
+#### GET /api/v1/analytics/
+Returns aggregated metrics data based on the provided parameters.
 
 Query parameters:
 - `category`: Filter by category
+- `granularity`: Filter by granularity
+- `metric`: Filter by metric name
 - `start_date`: Start of time range
 - `end_date`: End of time range
 
-#### GET /api/v1/analytics/trends
-Get time-series trend data with optional aggregation:
-- `interval`: Aggregation interval (hour, day, week, month)
-- `metric_name`: Filter by specific metric
-- `category`: Filter by category
+### Dashboard API (v1)
+
+#### GET /api/v1/dashboard
+Returns dashboard data based on the provided parameters.
+
+Query parameters:
+- `time_granularity`: Time granularity
 
 ## Error Responses
 
@@ -105,11 +106,9 @@ All error responses follow this format:
 
 Common error codes:
 - `400`: Bad Request
-- `401`: Unauthorized
-- `403`: Forbidden
 - `404`: Not Found
 - `422`: Unprocessable Entity
-- `429`: Too Many Requests
+- `500`: Internal Server Error
 
 ## Development Setup
 

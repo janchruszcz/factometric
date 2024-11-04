@@ -1,4 +1,4 @@
-# Factometric Frontend
+# Factometric UI
 
 A modern dashboard application built with Next.js for visualizing and managing metrics data.
 
@@ -12,14 +12,12 @@ A modern dashboard application built with Next.js for visualizing and managing m
   - Shadcn/UI components
 - **Data Visualization**: Recharts
 - **Form Handling**: React Hook Form + Zod
-- **API Integration**: Custom API client
+- **API Integration**: Custom, yet simple API client
 
 ## Features
 
 - 📊 Real-time metrics dashboard
 - 📈 Interactive analytics charts
-- 📱 Responsive design with mobile support
-- 🎨 Modern UI with dark/light mode support
 - 🔄 CRUD operations for metrics
 - 📋 Data filtering and pagination
 - 🎯 Type-safe forms with validation
@@ -37,10 +35,7 @@ pnpm install
 
 2. **Environment Setup**
 
-Create a `.env.local` file in the root directory:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
-```
+Modify your `.env` file to match your local API server URL.
 
 3. **Development Server**
 ```bash
@@ -75,7 +70,6 @@ web/
 - **Dashboard**: Real-time metrics visualization
 - **Metrics Management**: CRUD interface for metrics data
 - **Analytics**: Advanced data analysis and charts
-- **Sidebar**: Responsive navigation component
 
 ## API Integration
 
@@ -87,32 +81,3 @@ The application communicates with a backend API through a custom client configur
 - Custom theme configuration in `tailwind.config.ts`
 - CSS variables for dynamic theming
 - Responsive design patterns
-
-## Development Guidelines
-
-1. **Component Structure**
-   - Use TypeScript for all components
-   - Implement proper type definitions
-   - Follow the established component patterns
-
-2. **State Management**
-   - Use React hooks for local state
-   - Implement proper error handling
-   - Use suspense boundaries for loading states
-
-3. **Code Style**
-   - Follow ESLint configuration
-   - Use proper TypeScript types
-   - Maintain consistent naming conventions
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
