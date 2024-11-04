@@ -6,8 +6,8 @@ class Api::V1::DashboardController < ApplicationController
     dashboard_metrics(time_granularity)
 
     render json: { data: { engagement_metrics: @engagement_metrics, 
-                           acquisition_metrics: @acquisition_metrics, 
-                           revenue_metrics: @revenue_metrics, 
+                           acquisition_metrics: @acquisition_metrics,
+                           revenue_metrics: @revenue_metrics,
                            feature_metrics: @feature_metrics } }
   end
 
@@ -20,48 +20,71 @@ class Api::V1::DashboardController < ApplicationController
     @feature_metrics = feature_metrics(time_granularity)
   end
 
+  def time_range_for_granularity(granularity)
+    case granularity
+    when "minute"
+      30.minutes.ago..
+    when "hourly"
+      24.hours.ago..
+    else # daily
+      14.days.ago..
+    end
+  end
+
+  def format_timestamp(timestamp, granularity)
+    case granularity
+    when "minute", "hourly"
+      timestamp.strftime("%H:%M")
+    else
+      timestamp.strftime("%Y-%m-%d")
+    end
+  end
+
   def engagement_metrics(time_granularity)
-    Metric.where(category: 'engagement', granularity: time_granularity, timestamp: 14.days.ago..)
+    Metric.where(category: 'engagement', 
+                granularity: time_granularity, 
+                timestamp: time_range_for_granularity(time_granularity))
       .group_by(&:name)
       .transform_values do |metrics_by_name|
         metrics_by_name
-          .group_by { |m| m.timestamp.strftime("%Y-%m-%d") }
-          .transform_values { |daily_metrics| daily_metrics.sum(&:value).round(2) }
-          .map { |timestamp, value| { timestamp: timestamp, value: value } }
+          .map { |m| { timestamp: format_timestamp(m.timestamp, time_granularity), value: m.value } }
           .sort_by { |entry| entry[:timestamp] }
       end
   end
 
   def acquisition_metrics(time_granularity)
-    metrics = Metric.where(category: 'acquisition', granularity: time_granularity, timestamp: 14.days.ago..)
+    Metric.where(category: 'acquisition', 
+                granularity: time_granularity, 
+                timestamp: time_range_for_granularity(time_granularity))
       .group_by(&:name)
       .transform_values do |metrics_by_name|
         metrics_by_name
-          .group_by { |m| m.timestamp.strftime("%Y-%m-%d") }
-          .transform_values { |daily_metrics| daily_metrics.sum(&:value) / daily_metrics.size.to_f }
-          .map { |timestamp, value| { timestamp: timestamp, value: value } }
+          .map { |m| { timestamp: format_timestamp(m.timestamp, time_granularity), value: m.value } }
+          .sort_by { |entry| entry[:timestamp] }
       end
   end
 
   def revenue_metrics(time_granularity)
-    metrics = Metric.where(category: 'revenue', granularity: time_granularity, timestamp: 14.days.ago..)
+    Metric.where(category: 'revenue', 
+                granularity: time_granularity, 
+                timestamp: time_range_for_granularity(time_granularity))
       .group_by(&:name)
       .transform_values do |metrics_by_name|
         metrics_by_name
-          .group_by { |m| m.timestamp.strftime("%Y-%m-%d") }
-          .transform_values { |daily_metrics| daily_metrics.sum(&:value) }
-          .map { |timestamp, value| { timestamp: timestamp, value: value } }
+          .map { |m| { timestamp: format_timestamp(m.timestamp, time_granularity), value: m.value } }
+          .sort_by { |entry| entry[:timestamp] }
       end
   end
 
   def feature_metrics(time_granularity)
-    metrics = Metric.where(category: 'feature', granularity: time_granularity, timestamp: 14.days.ago..)
+    Metric.where(category: 'feature', 
+                granularity: time_granularity, 
+                timestamp: time_range_for_granularity(time_granularity))
       .group_by(&:name)
       .transform_values do |metrics_by_name|
         metrics_by_name
-          .group_by { |m| m.timestamp.strftime("%Y-%m-%d") }
-          .transform_values { |daily_metrics| daily_metrics.sum(&:value) / daily_metrics.size.to_f }
-          .map { |timestamp, value| { timestamp: timestamp, value: value } }
+          .map { |m| { timestamp: format_timestamp(m.timestamp, time_granularity), value: m.value } }
+          .sort_by { |entry| entry[:timestamp] }
       end
   end
 end

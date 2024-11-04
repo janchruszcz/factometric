@@ -51,6 +51,13 @@ module MetricSeeder
     'demo_requests' => { min: 1, max: 10, unit: 'count' }
   }
 
+  # Minute acquisition metrics
+  ACQUISITION_METRICS_MINUTE = {
+    'visitor_count' => { min: 5, max: 30, unit: 'count' },
+    'signup_attempts' => { min: 1, max: 10, unit: 'count' },
+    'referral_clicks' => { min: 0, max: 15, unit: 'count' }
+  }
+
   # Daily revenue metrics
   REVENUE_METRICS_DAILY = {
     'daily_revenue' => { min: 1000, max: 5000, unit: 'currency' },
@@ -65,6 +72,13 @@ module MetricSeeder
     'payment_attempts' => { min: 5, max: 20, unit: 'count' }
   }
 
+  # Minute revenue metrics
+  REVENUE_METRICS_MINUTE = {
+    'active_checkouts' => { min: 0, max: 10, unit: 'count' },
+    'transaction_attempts' => { min: 0, max: 5, unit: 'count' },
+    'revenue_per_minute' => { min: 0, max: 100, unit: 'currency' }
+  }
+
   # Daily feature metrics
   FEATURE_METRICS_DAILY = {
     'feature_adoption_rate' => { min: 20, max: 60, unit: 'percentage' },
@@ -77,6 +91,13 @@ module MetricSeeder
     'feature_usage_count' => { min: 100, max: 500, unit: 'count' },
     'feature_load_time' => { min: 100, max: 500, unit: 'milliseconds' },
     'feature_error_rate' => { min: 0.1, max: 2, unit: 'percentage' }
+  }
+
+  # Minute feature metrics
+  FEATURE_METRICS_MINUTE = {
+    'api_requests' => { min: 10, max: 100, unit: 'count' },
+    'active_features' => { min: 5, max: 25, unit: 'count' },
+    'error_count' => { min: 0, max: 5, unit: 'count' }
   }
 
   SOURCES = ['web', 'mobile_app', 'api', 'system']
@@ -160,8 +181,10 @@ end
 
 # Generate minute metrics for the last 24 hours
 [
-  ['engagement', MetricSeeder::ENGAGEMENT_METRICS_MINUTE]
-  # Add other minute-level metrics if needed
+  ['engagement', MetricSeeder::ENGAGEMENT_METRICS_MINUTE],
+  ['acquisition', MetricSeeder::ACQUISITION_METRICS_MINUTE],
+  ['revenue', MetricSeeder::REVENUE_METRICS_MINUTE],
+  ['feature', MetricSeeder::FEATURE_METRICS_MINUTE]
 ].each do |category, metrics_config|
   puts "Generating minute #{category} metrics..."
   metrics_config.each do |metric_name, config|

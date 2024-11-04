@@ -1,4 +1,6 @@
 class Api::V1::AnalyticsController < ApplicationController
+  wrap_parameters false
+
   def index
     metrics = Metric.where(
       category: params[:category],
@@ -6,11 +8,24 @@ class Api::V1::AnalyticsController < ApplicationController
       name: params[:metric],
       timestamp: params[:start_date]..params[:end_date]
     )
-    .group_by { |m| m.timestamp.strftime("%Y-%m-%d") }
-    .transform_values { |daily_metrics| daily_metrics.sum(&:value) }
-    .map { |timestamp, value| { timestamp: timestamp, value: value } }
+    .map { |m| { timestamp: format_timestamp(m.timestamp, params[:granularity]), value: m.value } }
     .sort_by { |entry| entry[:timestamp] }
 
-    render json: { data: metrics }
+    render json: { data: { metrics: metrics, average: calculate_average(metrics) } }
+  end
+
+  private
+
+  def format_timestamp(timestamp, granularity)
+    case granularity
+    when "minute", "hourly"
+      timestamp.strftime("%H:%M %d-%m-%Y")
+    else
+      timestamp.strftime("%Y-%m-%d %Z")
+    end
+  end
+  
+  def calculate_average(metrics)
+    (metrics.sum { |entry| entry[:value] } / metrics.size.to_f).round(2) rescue 0
   end
 end

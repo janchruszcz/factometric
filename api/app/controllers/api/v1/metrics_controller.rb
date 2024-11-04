@@ -1,6 +1,8 @@
 class Api::V1::MetricsController < ApplicationController
   include Pagy::Backend
 
+  wrap_parameters false
+
   # GET /metrics
   def index
     @metrics = Metric.all
@@ -11,6 +13,7 @@ class Api::V1::MetricsController < ApplicationController
     @metrics = @metrics.where('timestamp >= ?', params[:start_date]) if params[:start_date].present?
     @metrics = @metrics.where('timestamp <= ?', params[:end_date]) if params[:end_date].present?
     @metrics = @metrics.where(source: params[:source]) if params[:source].present?
+    @metrics = @metrics.order(timestamp: :desc)
 
     @pagy, @metrics = pagy(@metrics)
     render json: { data: @metrics, headers: pagy_headers_merge(@pagy) }
