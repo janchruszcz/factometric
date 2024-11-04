@@ -5,8 +5,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { analyticsApi } from '@/lib/api/analytics';
 import { Input } from '@/components/ui/input';
-import { metrics, type MetricCategory, type MetricGranularity } from '@/types/metrics';
+import { METRIC_CATEGORIES, METRIC_GRANULARITIES, metrics } from '@/types/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MetricCategory, MetricGranularity } from '@/types/definitions';
 
 const AnalyticsPage = () => {
   const [metric, setMetric] = useState('');
@@ -57,10 +58,11 @@ const AnalyticsPage = () => {
                         <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="engagement">Engagement</SelectItem>
-                        <SelectItem value="acquisition">Acquisition</SelectItem>
-                        <SelectItem value="revenue">Revenue</SelectItem>
-                        <SelectItem value="feature">Feature</SelectItem>
+                        {METRIC_CATEGORIES.map((category) => (
+                            <SelectItem key={category} value={category}>
+                                {category.charAt(0).toUpperCase() + category.slice(1)}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
@@ -71,9 +73,11 @@ const AnalyticsPage = () => {
                         <SelectValue placeholder="Select granularity" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="daily">Daily</SelectItem>
-                        <SelectItem value="hourly">Hourly</SelectItem>
-                        <SelectItem value="minute">Minute</SelectItem>
+                        {METRIC_GRANULARITIES.map((granularity) => (
+                            <SelectItem key={granularity} value={granularity}>
+                                {granularity.charAt(0).toUpperCase() + granularity.slice(1)}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
