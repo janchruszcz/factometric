@@ -47,7 +47,7 @@ export default function Home() {
       <div className="grid grid-cols-2 gap-4">
         <Card className="h-[350px]">
           <CardHeader>
-            <CardTitle>Engagement</CardTitle>
+            <CardTitle className="text-center">Engagement</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
@@ -57,7 +57,7 @@ export default function Home() {
         </Card>
         <Card className="h-[350px]">
           <CardHeader>
-            <CardTitle>Acquisition</CardTitle>
+            <CardTitle className="text-center">Acquisition</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
@@ -67,7 +67,7 @@ export default function Home() {
         </Card>
         <Card className="h-[350px]">
           <CardHeader>
-            <CardTitle>Revenue</CardTitle>
+            <CardTitle className="text-center">Revenue</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
