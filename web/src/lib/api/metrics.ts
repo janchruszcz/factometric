@@ -46,5 +46,9 @@ export const metricsApi = {
         'Content-Type': 'application/json',
       },
     });
-  }
+  },
+
+  deleteMetric: async (id: string, config?: RequestConfig) => {
+    return api.delete<void>(`/metrics/${id}`, config);
+  },
 };

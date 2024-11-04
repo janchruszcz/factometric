@@ -51,7 +51,11 @@ const MetricsPage: React.FC = () => {
   };
 
   const handleGranularityChange = (value: string) => {
-    setGranularity(value);
+    if (value === 'all') {
+        setGranularity('');
+    } else {
+        setGranularity(value);
+    }
   };
 
   const handleSourceChange = (value: string) => {

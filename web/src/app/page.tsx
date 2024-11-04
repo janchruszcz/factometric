@@ -45,47 +45,43 @@ export default function Home() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <Card>
+        <Card className="h-[350px]">
           <CardHeader>
             <CardTitle>Engagement</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
               data={dashboardData?.engagement_metrics} 
-              title="Engagement" 
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="h-[350px]">
           <CardHeader>
             <CardTitle>Acquisition</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
               data={dashboardData?.acquisition_metrics} 
-              title="Acquisition" 
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="h-[350px]">
           <CardHeader>
             <CardTitle>Revenue</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
               data={dashboardData?.revenue_metrics} 
-              title="Revenue" 
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="h-[350px]">
           <CardHeader>
-            <CardTitle>Feature</CardTitle>
+            <CardTitle className="text-center">Feature</CardTitle>
           </CardHeader>
           <CardContent>
             <AppLineChart 
               data={dashboardData?.feature_metrics} 
-              title="Feature" 
             />
           </CardContent>
         </Card>

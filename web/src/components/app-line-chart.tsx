@@ -124,14 +124,24 @@ const chartConfig = {
 
 export function AppLineChart({ 
   data, 
-  title
 }: { 
   data: any, 
-  title: string
 }) {
   if (!data) return null;
 
-  // Combine all metrics into a single dataset
+  // Generate a random color for metrics not in chartConfig
+  const getRandomColor = () => {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+  };
+
+  // Get metric config with fallback for unknown metrics
+  const getMetricConfig = (key: string) => {
+    return chartConfig[key as keyof typeof chartConfig] || {
+      label: key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+      color: getRandomColor()
+    };
+  };
+
   const combinedData = Object.values(data)[0]?.map((item, index) => {
     const dataPoint: any = {
       timestamp: item.timestamp,
@@ -146,7 +156,6 @@ export function AppLineChart({
 
   return (
     <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
-      <h3 className="text-center font-semibold mb-3">{title}</h3>
       <ResponsiveContainer>
         <LineChart data={combinedData} width={500} height={250}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -163,16 +172,19 @@ export function AppLineChart({
           <Legend />
           {Object.keys(combinedData?.[0] || {})
             .filter(key => key !== 'timestamp')
-            .map(key => (
-              <Line
-                key={key}
-                type="monotone"
-                dataKey={key}
-                name={chartConfig[key as keyof typeof chartConfig].label}
-                stroke={chartConfig[key as keyof typeof chartConfig].color}
-                strokeWidth={2}
-              />
-            ))}
+            .map(key => {
+              const config = getMetricConfig(key);
+              return (
+                <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  name={config.label}
+                  stroke={config.color}
+                  strokeWidth={2}
+                />
+              );
+            })}
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>
