@@ -1,9 +1,11 @@
 # Factometric
 
-A modern full-stack application for visualizing and managing metrics data with real-time analytics capabilities.
+A simple full-stack application for visualizing and managing metrics data with real-time analytics capabilities.
 
-![Dashboard](./web/public/dashboard.png)
-![Analytics](./web/public/analytics.png)
+<div style="display: flex; gap: 20px;">
+    <img src="./web/public/dashboard.png" width="400" alt="Dashboard" />
+    <img src="./web/public/analytics.png" width="400" alt="Analytics" />
+</div>
 
 ## Overview
 
@@ -16,12 +18,12 @@ The project consists of two main components:
 
 ### Frontend Architecture
 
-- **Framework**: Next.js 15.0 with App Router
+- **Framework**: Next.js 15.0
 - **Type Safety**: Full TypeScript implementation
 - **Component Structure**: 
   - UI components built with Radix UI primitives
   - Shadcn/UI for consistent design system
-  - Custom chart components using Recharts
+  - Chart components using Recharts
 - **API Integration**: Custom API client with type-safe requests
 - **State Management**: React hooks for local state
 - **Form Handling**: React Hook Form with Zod validation
@@ -111,4 +113,4 @@ npm run dev
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
