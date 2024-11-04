@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { metricsApi } from '@/lib/api/metrics';
-import MetricForm, { MetricFormData } from '@/components/MetricForm';
+import MetricForm, { MetricFormData } from '../../components/MetricForm';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import Loading from '../../loading';
@@ -48,7 +48,7 @@ export default function EditMetricForm({ params }: { params: Promise<{ id: strin
   }
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="max-w-md mx-auto mt-3">
       <h1 className="text-2xl font-bold mb-4">Edit Metric</h1>
       <MetricForm initialData={initialData} onSubmit={onSubmit} submitButtonText="Update" />
     </div>

@@ -15,7 +15,7 @@ const formSchema = z.object({
   timestamp: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/, "Invalid timestamp format"),
   category: z.enum(["engagement", "acquisition", "revenue", "feature"]),
   granularity: z.enum(["daily", "hourly", "minute"]),
-  source: z.enum(["api", "web", "mobile", "system"]).optional(),
+  source: z.enum(["api", "web", "mobile_app", "system"]).optional(),
   metadata: z.record(z.string(), z.any()).default({}),
   tags: z.array(z.string()).default([]),
 });
@@ -172,7 +172,7 @@ export default function MetricForm({ initialData, onSubmit, submitButtonText }: 
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {["api", "web", "mobile"].map((source) => (
+                        {["api", "web", "mobile", "system"].map((source) => (
                           <SelectItem key={source} value={source}>
                             {source.charAt(0).toUpperCase() + source.slice(1)}
                           </SelectItem>

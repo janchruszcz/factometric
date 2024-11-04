@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { metricsApi } from '@/lib/api/metrics';
-import MetricForm, { MetricFormData } from '@/components/MetricForm';
+import MetricForm, { MetricFormData } from '../components/MetricForm';
 
 export default function CreateMetricForm() {
   const router = useRouter();
@@ -10,7 +10,6 @@ export default function CreateMetricForm() {
   const onSubmit = async (values: MetricFormData) => {
     try {
       const response = await metricsApi.createMetric(values);
-      console.log('Metric created:', response);
       router.push('/metrics');
     } catch (error) {
       console.error('Error creating metric:', error);
@@ -18,7 +17,7 @@ export default function CreateMetricForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="max-w-md mx-auto mt-3">
       <h1 className="text-2xl font-bold mb-4">New Metric</h1>
       <MetricForm onSubmit={onSubmit} submitButtonText="Create" />
     </div>
