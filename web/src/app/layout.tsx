@@ -18,11 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         <SidebarProvider>
           <AppSidebar />
-          <main className="container border-zinc-100 border-2 my-2 rounded-lg mx-3">
-            <SidebarTrigger />
+          <main className="container bg-sidebar border my-2 rounded-lg mx-3">
             {children}
           </main>
         </SidebarProvider>

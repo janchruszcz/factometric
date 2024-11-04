@@ -19,8 +19,8 @@ export default function CreateMetricForm() {
 
   return (
     <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Create New Metric</h1>
-      <MetricForm onSubmit={onSubmit} submitButtonText="Create Metric" />
+      <h1 className="text-2xl font-bold mb-4">New Metric</h1>
+      <MetricForm onSubmit={onSubmit} submitButtonText="Create" />
     </div>
   );
 }

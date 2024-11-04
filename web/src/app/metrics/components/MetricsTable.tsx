@@ -5,17 +5,13 @@ import { Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-interface MetricsTableProps {
-  metrics: Metric[];
-}
-
-export const MetricsTable: React.FC<MetricsTableProps> = ({ metrics }) => (
+export const MetricsTable: React.FC<MetricsTableProps> = ({ metrics, onDelete }) => {
+  return (
     <Table>
         <TableHeader>
             <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Value</TableHead>
-                <TableHead>Unit</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Granularity</TableHead>
                 <TableHead>Timestamp</TableHead>
@@ -30,7 +26,6 @@ export const MetricsTable: React.FC<MetricsTableProps> = ({ metrics }) => (
           <TableRow key={metric.id}>
             <TableCell>{metric.name}</TableCell>
             <TableCell>{metric.value}</TableCell>
-            <TableCell>{metric.unit || 'N/A'}</TableCell>
             <TableCell>{metric.category || 'N/A'}</TableCell>
             <TableCell>{metric.granularity || 'N/A'}</TableCell>
             <TableCell>{new Date(metric.timestamp).toLocaleString()}</TableCell>
@@ -42,10 +37,13 @@ export const MetricsTable: React.FC<MetricsTableProps> = ({ metrics }) => (
                   <Pencil className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button variant="default" size="sm" className="bg-[#ff365e] hover:bg-[#ff365e]/80" asChild>
-                <Link href={`/metrics/${metric.id}`}>
-                  <Trash className="h-4 w-4" />
-                </Link>
+              <Button
+                variant="default"
+                size="sm"
+                className="bg-[#ff365e] hover:bg-[#ff365e]/80"
+                onClick={() => onDelete(metric.id)}
+              >
+                <Trash className="h-4 w-4" />
               </Button>
           </TableCell>
           </TableRow>

@@ -5,6 +5,7 @@ import { metricsApi } from '@/lib/api/metrics';
 import MetricForm, { MetricFormData } from '@/components/MetricForm';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import Loading from '../../loading';
 
 export default function EditMetricForm({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -36,7 +37,6 @@ export default function EditMetricForm({ params }: { params: Promise<{ id: strin
   const onSubmit = async (values: MetricFormData) => {
     try {
       const response = await metricsApi.updateMetric(unwrappedParams.id, values);
-      console.log('Metric updated:', response);
       router.push('/metrics');
     } catch (error) {
       console.error('Error updating metric:', error);
@@ -44,13 +44,13 @@ export default function EditMetricForm({ params }: { params: Promise<{ id: strin
   };
 
   if (!initialData) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
     <div className="max-w-md mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Edit Metric</h1>
-      <MetricForm initialData={initialData} onSubmit={onSubmit} submitButtonText="Update Metric" />
+      <MetricForm initialData={initialData} onSubmit={onSubmit} submitButtonText="Update" />
     </div>
   );
 }

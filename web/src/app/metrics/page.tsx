@@ -66,6 +66,15 @@ const MetricsPage: React.FC = () => {
     setCurrentPage(page);
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      await metricsApi.deleteMetric(id);
+      setMetrics(metrics.filter(metric => metric.id !== id));
+    } catch (error) {
+      console.error('Failed to delete metric:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
@@ -120,8 +129,16 @@ const MetricsPage: React.FC = () => {
           </Button>
         </div>
       </div>
-      <MetricsTable metrics={metrics} isLoading={loading || isFiltering} />
-      <MetricsPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+      <MetricsTable 
+        metrics={metrics} 
+        onDelete={handleDelete} 
+        isLoading={loading || isFiltering} 
+      />
+      <MetricsPagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={handlePageChange} 
+      />
     </div>
   );
 };
