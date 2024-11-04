@@ -3,6 +3,7 @@ one:
   value: 1000
   timestamp: <%= Time.current %>
   category: engagement
+  granularity: daily
   source: web
   tags: 
     - engagement
@@ -16,6 +17,7 @@ two:
   value: 300
   timestamp: <%= 1.day.ago %>
   category: engagement
+  granularity: daily
   source: mobile_app
   tags:
     - engagement
